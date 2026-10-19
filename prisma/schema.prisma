@@ -1,0 +1,31 @@
+
+generator client {
+  provider = "prisma-client"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "mysql"
+}
+
+model EtsyListing {
+  listingId        String   @id
+  shopId           String?
+  title            String   @db.Text
+  description      String?  @db.LongText
+  url              String?  @db.Text
+  priceValue       Decimal? @db.Decimal(12, 2)
+  priceCurrency    String?  @db.VarChar(10)
+  tags             Json?
+  materials        Json?
+  views            Int?
+  favorites        Int?
+  quantity         Int?
+  language         String?  @db.VarChar(20)
+  listingCreatedAt String?  @db.VarChar(50)
+  fetchedAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+
+  @@index([shopId], map: "EtsyListing_shopId_idx")
+  @@map("etsylisting")
+}
